@@ -42,12 +42,12 @@ async function searchDirectory(
     }
 
     if (entry.isFile() && entry.name.endsWith(".html")) {
-      const { title, description, image } = await readFileContent(fullPath);
+      const { title, description, image, url } = await readFileContent(fullPath);
 
       pages.push({
         title,
         description,
-        url: `/${entry.parentPath.replace(basePath, "")}`,
+        url,
         image,
       });
     }
@@ -67,14 +67,20 @@ export const extractMetaData = (html: string) => {
   const ogImageMetaTag = html.match(
     /<meta\b[^>]*\bproperty=["']og:image["'][^>]*>/i,
   )?.[0];
+  
+  const canonicalLinkTag = html.match(
+    /<link\b[^>]*\brel=["']canonical["'][^>]*>/i,
+  )?.[0];
 
   const description = metaTag?.match(/\bcontent=["'](.*?)["']/i)?.[1];
   const title = html.match(/<title>(.*?)<\/title>/i)?.[1];
   const image = ogImageMetaTag?.match(/\bcontent=["'](.*?)["']/i)?.[1];
+  const url = canonicalLinkTag?.match(/\bhref=["'](.*?)["']/i)?.[1]; 
 
   return {
     description: description || "",
     title: title || "",
     image: image || "",
+    url: url || "",
   };
 };

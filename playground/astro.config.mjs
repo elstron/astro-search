@@ -7,7 +7,7 @@ import astroSearch from 'astro-search';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'http://localhost:4321',
+	site: 'https://astro-search.stron.dev/',
 	integrations: [mdx(), sitemap(), astroSearch({
     exclude: {
       directories: ['/news'],
