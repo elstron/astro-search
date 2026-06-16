@@ -2,6 +2,8 @@
 
 `astro-search` is an Astro integration that generates a static search index at build time and exposes a ready-to-use search component for static sites.
 
+DEMO: https://astro-search.stron.dev/
+
 ## Features
 
 - Provides a `<Search />` component for Astro.
