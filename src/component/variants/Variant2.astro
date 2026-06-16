@@ -1,0 +1,103 @@
+
+<template>
+    <li class="card variant-2">
+        <a href="" class="card-link">
+        <img src="" alt="" class="thumb" />
+        <div class="meta">
+            <h3 class="title">Título</h3>
+            <p class="description">Descripción breve del resultado de búsqueda.</p>
+        </div>
+        </a>
+    </li>
+</template>
+
+<style>
+li { list-style: none; }
+
+/* Variant2: lively horizontal card with accent and subtle depth */
+.card {
+    position: relative;
+    display: flex;
+    gap: 0.9rem;
+    align-items: center;
+    padding: 0.85rem 1rem 0.85rem 1.2rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(180deg, #ffffff, #fbfcff);
+    box-shadow: 0 1px 0 rgba(15,23,42,0.03);
+    border: 1px solid rgba(99,102,241,0.08); /* slight indigo accent */
+    transform-origin: center;
+    overflow: hidden;
+    animation: fadeUp 360ms cubic-bezier(.2,.9,.3,1) both;
+}
+
+.card:hover {
+    transform: translateY(-6px) scale(1.01) rotate(-0.2deg);
+    box-shadow: 0 8px 30px rgba(15,23,42,0.08);
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: linear-gradient(180deg,#6366f1,#4f46e5);
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.thumb {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+    border: 1px solid rgba(2,6,23,0.04);
+}
+
+.meta { display: flex; flex-direction: column; gap: 0.2rem; }
+.title { margin: 0; font-size: 1rem; color: #071133; font-weight: 700; }
+.description { margin: 0; font-size: 0.9rem; color: #475569; opacity: 0.95; }
+
+a { text-decoration: none; color: inherit; display: flex; align-items: center; }
+
+/* Entrance animation */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px) scale(0.995); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+</style>
+
+<style is:global>
+/* Variant2 input: pill-shaped with left icon and indigo accent to match lively cards */
+#search-input,
+.astro-search-component input[type="search"] {
+    width: 100%;
+    padding: 0.6rem 1rem 0.6rem 3rem; /* room for icon */
+    border: 1px solid rgba(29,78,216,0.12);
+    border-radius: 999px;
+    background: linear-gradient(180deg,#fff,#fbfdff);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 24 24'><path stroke='%236366f1' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.6' d='M21 21l-4.35-4.35'/><circle cx='11' cy='11' r='5' stroke='%236366f1' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: 12px center;
+    padding-left: 40px;
+    font-size: 0.98rem;
+    transition: box-shadow 180ms ease, transform 120ms ease, border-color 180ms;
+}
+
+#search-input::placeholder, .astro-search-component input[type="search"]::placeholder {
+    color: rgba(15,23,42,0.35);
+}
+
+#search-input:focus, .astro-search-component input[type="search"]:focus {
+    box-shadow: 0 6px 24px rgba(99,102,241,0.12);
+    border-color: #6366f1;
+    transform: translateY(-1px);
+}
+
+/* Keep grid layout for results */
+#search-results { margin-top: 0.6rem; display: grid; grid-template-columns: 1fr; gap: 0.6rem; }
+
+.astro-search-component .card { padding: 0.75rem; border-radius: 0.6rem; }
+</style>

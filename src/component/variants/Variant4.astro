@@ -1,0 +1,77 @@
+<template>
+  <li class="card variant-4">
+    <a href="" class="card-link">
+      <div class="image-wrap">
+        <img src="" alt="" class="thumb large" />
+      </div>
+      <div class="content">
+        <h3 class="title">Título con imagen grande</h3>
+        <p class="description">Descripción más larga que puede ocupar varias líneas y dar contexto adicional.</p>
+      </div>
+    </a>
+  </li>
+</template>
+
+<style>
+  li { list-style: none; }
+
+  .card {
+  border-radius: 0.6rem;
+  overflow: hidden;
+  background: linear-gradient(180deg,#fff,#fbfdff);
+  border: 1px solid rgba(15,23,42,0.04);
+  box-shadow: 0 10px 30px rgba(2,6,23,0.06);
+  transition: transform 260ms cubic-bezier(.2,.9,.3,1), box-shadow 260ms;
+  animation: reveal 480ms cubic-bezier(.2,.9,.3,1) both;
+  }
+
+  .card-link { display: block; text-decoration: none; color: inherit; }
+
+  .image-wrap { width: 100%; height: 140px; overflow: hidden; }
+  .thumb.large {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .content { padding: 0.75rem; }
+  .title { margin: 0 0 0.25rem 0; font-size: 1rem; color: #0f172a; }
+  .description { margin: 0; font-size: 0.9rem; color: #475569; }
+
+  .card:hover { transform: translateY(-8px) scale(1.004); box-shadow: 0 18px 50px rgba(2,6,23,0.12); }
+
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(18px) scale(0.995); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+</style>
+
+<style is:global>
+  /* Variant4: imagen grande — estilos globales para input y resultados que enfatizan las tarjetas con imagen */
+  #search-input, .astro-search-component input[type="search"] {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 1px solid #e6eef6;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    background: linear-gradient(180deg, #ffffff, #fbfdff);
+  }
+
+  #search-input:focus, .astro-search-component input[type="search"]:focus {
+    box-shadow: 0 6px 30px rgba(2,6,23,0.06);
+    border-color: #60a5fa;
+  }
+
+  #search-results {
+    margin-top: 0.6rem;
+    display: grid;
+    gap: 0.6rem;
+    grid-template-columns: 1fr;
+  }
+
+  /* When this variant is present, cards are full-width with prominent images */
+  .astro-search-component .card { overflow: hidden; border-radius: 0.5rem; }
+  .astro-search-component .card .title { font-size: 1.02rem; color: #0b1220; }
+  .astro-search-component .card .description { color: #334155; }
+</style>

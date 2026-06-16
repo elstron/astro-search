@@ -1,0 +1,106 @@
+---
+import Variant1 from "./variants/Variant1.astro";
+import Variant2 from "./variants/Variant2.astro";
+import Variant3 from "./variants/Variant3.astro";
+import Variant4 from "./variants/Variant4.astro";
+const { variant = "default" } = Astro.props;
+
+let variants = {
+  default: Variant3,
+  variant1: Variant1,
+  variant2: Variant2,
+  variant3: Variant3,
+  variant4: Variant4
+};
+
+let VariantComponent = variants[variant as keyof typeof variants];
+
+---
+
+<div class="astro-search-component">
+  <input
+    id="search-input"
+    type="search"
+    placeholder="Search..."
+    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+  <VariantComponent />
+  <div id="search-results"></div>
+</div>
+
+<script is:inline>
+  const searchInput = document.getElementById("search-input");
+
+  const pageResults = debounceFetch(async (signal, query) => {
+    console.log(query);
+    const res = await fetch("/search.json", { signal });
+    const data = await res.json();
+    return data.filter((item) => item?.title?.toLowerCase().includes(query));
+  }, 300);
+
+  searchInput.addEventListener("input", async (event) => {
+    const query = event.target.value.toLowerCase();
+    const data = isStatic() ? await pageResults(query) : [];
+
+    const resultsContainer = document.getElementById("search-results");
+    resultsContainer.innerHTML = "";
+
+    if (query) {
+      data.forEach((item) => {
+        const cloneTemplate = createItem(item);
+        resultsContainer.appendChild(cloneTemplate);
+      });
+    }
+  });
+
+  function createItem(item) {
+    const cloneTemplate = document
+      .querySelector("template")
+      .content.cloneNode(true);
+
+    const link = cloneTemplate.querySelector("a");
+    const title = cloneTemplate.querySelector(".title");
+    const image = cloneTemplate.querySelector("img") || null;
+    const description = cloneTemplate.querySelector(".description") || null;
+
+    link.href = item.url;
+    title.textContent = item.title;
+
+    if (description && item.description) {
+      description.textContent = item.description;
+    }
+
+    if (image && item.image) {
+      image.src = item.image;
+      image.alt = item.title;
+    }
+    return cloneTemplate;
+  }
+
+  function isStatic() {
+    return (
+      typeof stronAstroOutput !== "undefined" && stronAstroOutput === "static"
+    );
+  }
+
+  function debounceFetch(fn, delay = 300) {
+    let timeout = null;
+    let controller = null;
+
+    return (...args) =>
+      new Promise((resolve, reject) => {
+        clearTimeout(timeout);
+        controller?.abort();
+
+        timeout = setTimeout(async () => {
+          controller = new AbortController();
+
+          try {
+            resolve(await fn(controller.signal, ...args));
+          } catch (error) {
+            reject(error);
+          }
+        }, delay);
+      });
+  }
+</script>

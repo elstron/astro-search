@@ -1,63 +1,81 @@
-# Astro Starter Kit: Blog
+# astro-search
 
-```sh
-pnpm create astro@latest -- --template blog
+`astro-search` is an Astro integration that generates a static search index at build time and exposes a ready-to-use search component for static sites.
+
+## Features
+
+- Builds a search index during the Astro build.
+- Writes `search.json` to the output directory.
+- Provides a `<Search />` component for Astro.
+- Works with `output: "static"`.
+
+## Installation
+
+```bash
+pnpm add astro-search
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Usage
 
-Features:
+### 1. Add the integration
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+```js
+// astro.config.mjs
+import { defineConfig } from "astro/config";
+import astroSearch from "astro-search";
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+export default defineConfig({
+  output: "static",
+  integrations: [
+    astroSearch({
+      exclude: {
+        directories: ["/news"],
+        pages: ["about", "home"],
+      },
+    }),
+  ],
+});
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+### 2. Use the search component
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```astro
+---
+import Search from "astro-search/component";
+---
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+<Search />
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Configuration
 
-## 🧞 Commands
+```ts
+astroSearch({
+  exclude?: {
+    directories?: string[];
+    pages?: string[];
+  };
+})
+```
 
-All commands are run from the root of the project, from a terminal:
+- `directories`: directories to exclude from the index.
+- `pages`: specific pages to exclude from the index.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+## Component variants
 
-## 👀 Want to learn more?
+The component includes multiple visual variants. Select one with the `variant` prop:
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```astro
+<Search variant="variant1" />
+<Search variant="variant2" />
+<Search variant="variant3" />
+<Search variant="variant4" />
+```
 
-## Credit
+If you do not pass a variant, `variant3` is used by default.
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+## Notes
+
+- The index is generated from the built HTML output.
+- Each result uses `title`, `description`, `url`, and `image` when available.
+- This package is designed for static Astro sites.

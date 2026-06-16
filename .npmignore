@@ -1,0 +1,12 @@
+node_modules/
+playground/
+scripts/
+src/
+.gitignore
+.astro/
+.DS_Store
+.idea/
+*.log
+.env
+.env.production
+pnpm-lock.yaml

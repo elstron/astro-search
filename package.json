@@ -1,21 +1,46 @@
 {
   "name": "astro-search",
+  "version": "1.0.0",
+  "description": "A search plugin for Astro that provides static search capabilities.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
-  "version": "0.0.1",
-  "engines": {
-    "node": ">=22.12.0"
-  },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "dev": "cd playground && pnpm dev",
+    "build": "node scripts/build.mjs",
+    "build:watch": "node --watch-path=src scripts/build.mjs"
   },
-  "dependencies": {
-    "@astrojs/mdx": "^6.0.3",
-    "@astrojs/rss": "^4.0.18",
-    "@astrojs/sitemap": "^3.7.3",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./component": {
+      "import": "./dist/component/Search.astro"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "astro-component",
+    "withastro",
+    "astro-integration",
+    "astro",
+    "search",
+    "plugin",
+    "static search"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elstron/astro-search"
+  },
+  "author": "Stron",
+  "license": "MIT",
+  "packageManager": "pnpm@10.28.2",
+  "devDependencies": {
+    "@types/node": "^25.9.3",
     "astro": "^6.4.6",
-    "sharp": "^0.34.3"
+    "typescript": "^5.9.3"
   }
 }

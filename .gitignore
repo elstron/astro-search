@@ -22,3 +22,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# playground
+playground/node_modules/
+playground/dist/
+playground/.astro/
