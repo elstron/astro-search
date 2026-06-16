@@ -26,6 +26,7 @@ export function astroSearch(userConfig: UserConfig = {}): AstroIntegration {
 
         await savePages(await pages, outDir);
         logger.info(`Search index generated with ${await pages.then((p) => p.length)} pages.`);
+        logger.info(`Save the search index to", "${outDir.pathname}/search.json"`);
       },
     },
   };
