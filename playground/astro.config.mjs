@@ -3,7 +3,7 @@
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
-import astroSearch from '../dist/';
+import astroSearch from 'astro-search';
 
 // https://astro.build/config
 export default defineConfig({
