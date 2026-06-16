@@ -16,17 +16,16 @@ export function astroSearch(userConfig: UserConfig = {}): AstroIntegration {
       "astro:config:done": async ({ config: cfg, logger }) => {
         outDir = cfg.outDir;
       },
-      "astro:build:done": async ({ logger }) => {
+      "astro:build:generated": async ({ logger, dir }) => {
         const { exclude } = userConfig;
-
         const pages = searchPages(outDir, {
           directories: exclude?.directories ?? [],
           pages: exclude?.pages ?? [],
         });
 
-        await savePages(await pages, outDir);
+        await savePages(await pages, dir);
         logger.info(`Search index generated with ${await pages.then((p) => p.length)} pages.`);
-        logger.info(`Save the search index to", "${outDir.pathname}/search.json"`);
+        logger.info(`Save the search index to", "${dir.pathname}search.json"`);
       },
     },
   };
