@@ -6,9 +6,9 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "dev": "cd playground && pnpm dev",
     "build": "node scripts/build.mjs",
-    "build:watch": "node --watch-path=src scripts/build.mjs"
+    "build:watch": "node --watch-path=src scripts/build.mjs",
+    "build:playground": "cd playground && pnpm build"
   },
   "exports": {
     ".": {

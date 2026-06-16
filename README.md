@@ -4,8 +4,6 @@
 
 ## Features
 
-- Builds a search index during the Astro build.
-- Writes `search.json` to the output directory.
 - Provides a `<Search />` component for Astro.
 - Works with `output: "static"`.
 
@@ -76,6 +74,4 @@ If you do not pass a variant, `variant3` is used by default.
 
 ## Notes
 
-- The index is generated from the built HTML output.
 - Each result uses `title`, `description`, `url`, and `image` when available.
-- This package is designed for static Astro sites.

@@ -4,8 +4,6 @@
 
 ## Características
 
-- Genera el índice de búsqueda durante el build de Astro.
-- Escribe `search.json` en el directorio de salida.
 - Proporciona un componente `<Search />` para Astro.
 - Funciona con `output: "static"`.
 
@@ -78,4 +76,3 @@ Si no indicas ninguna, se usa `variant3` por defecto.
 
 - El índice se genera a partir del HTML construido.
 - Cada resultado usa `title`, `description`, `url` e `image` cuando están disponibles.
-- Este paquete está pensado para sitios Astro estáticos.
