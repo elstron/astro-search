@@ -9,7 +9,7 @@
     "checkJs": false,
     "strict": true,
     "declaration": true,
-    "declarationMap": true,
+    "declarationMap": false,
     "outDir": "./dist",
     "rootDir": "./src",
     "skipLibCheck": true,
