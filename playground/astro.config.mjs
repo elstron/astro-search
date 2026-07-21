@@ -7,6 +7,7 @@ import astroSearch from 'astro-search';
 import cloudflare from '@astrojs/cloudflare';
 // https://astro.build/config
 export default defineConfig({
+  output: "server",
 	site: 'https://astro-search.stron.dev/',
 	integrations: [mdx(), sitemap(), astroSearch({
     exclude: {
