@@ -8,6 +8,7 @@ import astroSearch from 'astro-search';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://astro-search.stron.dev/',
+  output: "static",
 	integrations: [mdx(), sitemap(), astroSearch({
     exclude: {
       directories: ['/news'],
