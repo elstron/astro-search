@@ -27,3 +27,4 @@ pnpm-debug.log*
 playground/node_modules/
 playground/dist/
 playground/.astro/
+.wrangler/
