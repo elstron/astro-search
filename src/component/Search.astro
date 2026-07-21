@@ -3,7 +3,7 @@ import Variant1 from "./variants/Variant1.astro";
 import Variant2 from "./variants/Variant2.astro";
 import Variant3 from "./variants/Variant3.astro";
 import Variant4 from "./variants/Variant4.astro";
-const { variant = "default" } = Astro.props;
+const { variant = "default", placeholder = "search..." } = Astro.props;
 
 let variants = {
   default: Variant3,
@@ -14,14 +14,13 @@ let variants = {
 };
 
 let VariantComponent = variants[variant as keyof typeof variants];
-
 ---
 
 <div class="astro-search-component">
   <input
     id="search-input"
     type="search"
-    placeholder="Search..."
+    placeholder={placeholder}
     class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
   />
   <VariantComponent />
@@ -31,8 +30,7 @@ let VariantComponent = variants[variant as keyof typeof variants];
 <script is:inline>
   const searchInput = document.getElementById("search-input");
 
-  const pageResults = debounceFetch(async (signal, query) => {
-    console.log(query);
+  const fetchPages = debounceFetch(async (signal, query) => {
     const res = await fetch("/search.json", { signal });
     const data = await res.json();
     return data.filter((item) => item?.title?.toLowerCase().includes(query));
@@ -40,17 +38,20 @@ let VariantComponent = variants[variant as keyof typeof variants];
 
   searchInput.addEventListener("input", async (event) => {
     const query = event.target.value.toLowerCase();
-    const data = isStatic() ? await pageResults(query) : [];
+    const pageResults = hasInlinePages() ? inlinePages() : fetchPages(query) 
+    const data = isStatic() ? await pageResults : [];
 
     const resultsContainer = document.getElementById("search-results");
     resultsContainer.innerHTML = "";
 
-    if (query) {
-      data.forEach((item) => {
-        const cloneTemplate = createItem(item);
-        resultsContainer.appendChild(cloneTemplate);
-      });
-    }
+    if (!data || data.length < 0) return
+    
+    data.forEach((item) => {
+      if(!item.title) return
+      const cloneTemplate = createItem(item);
+      resultsContainer.appendChild(cloneTemplate);
+    });
+    
   });
 
   function createItem(item) {
@@ -83,12 +84,22 @@ let VariantComponent = variants[variant as keyof typeof variants];
     );
   }
 
+  function hasInlinePages() {
+    return ( 
+      typeof astroSearchPages !== "undefined" && astroSearchPages.length > 0 
+    )
+  }
+
+  async function inlinePages() {
+    return new Promise((resolve) => resolve(astroSearchPages))
+  }
+
   function debounceFetch(fn, delay = 300) {
     let timeout = null;
     let controller = null;
 
     return (...args) =>
-      new Promise((resolve, reject) => {
+      new Promise((resolve) => {
         clearTimeout(timeout);
         controller?.abort();
 
@@ -97,9 +108,7 @@ let VariantComponent = variants[variant as keyof typeof variants];
 
           try {
             resolve(await fn(controller.signal, ...args));
-          } catch (error) {
-            reject(error);
-          }
+          } catch (error) {}
         }, delay);
       });
   }
