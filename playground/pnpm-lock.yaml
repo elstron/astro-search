@@ -21,8 +21,8 @@ importers:
         specifier: ^6.4.7
         version: 6.4.7(@types/node@24.13.2)(rollup@4.62.0)
       astro-search:
-        specifier: ^1.0.4
-        version: 1.0.4
+        specifier: latest
+        version: 1.0.5
       sharp:
         specifier: ^0.34.5
         version: 0.34.5
@@ -666,8 +666,8 @@ packages:
     resolution: {integrity: sha512-LElXdjswlqjWrPpJFg1Fx4wpkOCxj1TDHlSV4PlaRxHGWko024xICaa97ZkMfs6DRKlCguiAI+rbXv5GWwXIkg==}
     hasBin: true
 
-  astro-search@1.0.4:
-    resolution: {integrity: sha512-YrWf9b8659QCN8kklszy+5+eE6JDwRAh2g/GaqjIVGh7K9TkL7lg/1Hx73wZy2cj1sbEj5pmMfWUzstwpkZq6Q==}
+  astro-search@1.0.5:
+    resolution: {integrity: sha512-H9FOlWCl6P2hAtqfQspG99Uydsq4rtYYOfbO/vURXloJLZM/ciWGPoQx/jDh6ENspTtrOCmHBPyK7dCx9Q/Jew==}
 
   astro@6.4.7:
     resolution: {integrity: sha512-5vsXx0H52u23Jpshs9tM81D03Tb3Oh2Vt2Zo0bpqjXN+njkAWjFyGjTfmWJLAcrCQd9Q+iWB1eqfhR1sZJEaUA==}
@@ -2167,7 +2167,7 @@ snapshots:
 
   astring@1.9.0: {}
 
-  astro-search@1.0.4: {}
+  astro-search@1.0.5: {}
 
   astro@6.4.7(@types/node@24.13.2)(rollup@4.62.0):
     dependencies:
