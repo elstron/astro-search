@@ -4,7 +4,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
 import astroSearch from 'astro-search';
-
+import cloudflare from "@astrojs/cloudflare";
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://astro-search.stron.dev/',
@@ -39,4 +39,5 @@ export default defineConfig({
 			},
 		},
 	],
+  adapter: cloudflare()
 });
