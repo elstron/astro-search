@@ -1,7 +1,7 @@
 {
   "name": "astro-search",
-  "version": "1.0.4",
-  "description": "A search plugin for Astro that provides static search capabilities.",
+  "version": "1.0.5",
+  "description": "Static page finder for Astro sites with build-time indexing and a ready search component.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",

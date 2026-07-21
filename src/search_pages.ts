@@ -1,5 +1,5 @@
 import { readdir, readFile } from "node:fs/promises";
-import * as path from 'node:path';
+import * as path from "node:path";
 import type { ExcludeConfig, PageItem } from "./types.js";
 
 export const searchPages = async (
@@ -42,7 +42,8 @@ async function searchDirectory(
     }
 
     if (entry.isFile() && entry.name.endsWith(".html")) {
-      const { title, description, image, url } = await readFileContent(fullPath);
+      const { title, description, image, url } =
+        await readFileContent(fullPath);
 
       pages.push({
         title,
@@ -67,7 +68,7 @@ export const extractMetaData = (html: string) => {
   const ogImageMetaTag = html.match(
     /<meta\b[^>]*\bproperty=["']og:image["'][^>]*>/i,
   )?.[0];
-  
+
   const canonicalLinkTag = html.match(
     /<link\b[^>]*\brel=["']canonical["'][^>]*>/i,
   )?.[0];
@@ -75,7 +76,7 @@ export const extractMetaData = (html: string) => {
   const description = metaTag?.match(/\bcontent=["'](.*?)["']/i)?.[1];
   const title = html.match(/<title>(.*?)<\/title>/i)?.[1];
   const image = ogImageMetaTag?.match(/\bcontent=["'](.*?)["']/i)?.[1];
-  const url = canonicalLinkTag?.match(/\bhref=["'](.*?)["']/i)?.[1]; 
+  const url = canonicalLinkTag?.match(/\bhref=["'](.*?)["']/i)?.[1];
 
   return {
     description: description || "",
@@ -84,3 +85,14 @@ export const extractMetaData = (html: string) => {
     url: url || "",
   };
 };
+
+export async function pageList(outDir: string) {
+  try {
+    const pages = await readFile(`${outDir}search.json`, {
+      encoding: "utf-8",
+    });
+    return pages;
+  } catch (e) {
+    return null;
+  }
+}
